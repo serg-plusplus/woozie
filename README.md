@@ -1,4 +1,4 @@
-# wuzimu
+# woozie
 A primitive for powerful routing/matching/resolving.
 
 > **Carl**: "*Uh, one last thing. You do know that I'm black, right? And not Chinese.*"\
@@ -6,9 +6,9 @@ A primitive for powerful routing/matching/resolving.
 
 ![Woozie](woozie-in-search.jpg)
 
-## What is wuzimu?
-`wuzimu` is a NPM module. It implements the routing primitives.
-The goal of `wuzimu` is to provide simple declarative routing for modern JavaScript applications.
+## What is woozie?
+`woozie` is a NPM module. It implements the routing primitives.
+The goal of `woozie` is to provide simple declarative routing for modern JavaScript applications.
 
 ## License
 Licensed under [MIT license](LICENSE).
