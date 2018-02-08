@@ -2,7 +2,6 @@
 A primitive for powerful routing/matching/resolving.
 
 > **Carl**: "*Uh, one last thing. You do know that I'm black, right? And not Chinese.*"
-> 
 > **Woozie**: "*I'm blind, Carl, not stupid.*"
 
 ![Woozie](woozie-in-search.jpg)
