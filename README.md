@@ -1,6 +1,8 @@
 # wuzimu
 A primitive for powerful routing/matching/resolving.
 
+## What is wuzimu?
+`wuzimu` is a NPM module. It implements the routing primitives.
 The goal of `wuzimu` is to provide simple declarative routing for modern JavaScript applications.
 
 ## License
