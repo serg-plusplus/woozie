@@ -1,4 +1,4 @@
-# Woozie
+# Woozie🕴
 
 [![Latest](https://badgen.net/npm/v/woozie)](https://npm.im/woozie) [![Super Tiny](https://badgen.net/bundlephobia/min/woozie)](https://npm.im/woozie) [![Super Tiny](https://badgen.net/bundlephobia/minzip/woozie)](https://npm.im/woozie)
 
