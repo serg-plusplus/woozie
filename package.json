@@ -1,6 +1,6 @@
 {
   "name": "woozie",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "main": "dist/index.js",
   "module": "dist/woozie.esm.js",
   "typings": "dist/index.d.ts",
