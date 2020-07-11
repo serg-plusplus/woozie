@@ -8,7 +8,30 @@
     "dist",
     "src"
   ],
-  "author": "serh11p",
+  "description": "Modern, explicit and browser-first routing for React",
+  "keywords": [
+    "woozie",
+    "react",
+    "router",
+    "route",
+    "routing",
+    "location",
+    "history",
+    "link",
+    "redirect"
+  ],
+  "author": {
+    "name": "serh11p",
+    "email": "git@serh11p.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/serh11p/woozie.git"
+  },
+  "homepage": "https://github.com/serh11p/woozie#readme",
+  "bugs": {
+    "url": "https://github.com/serh11p/woozie/issues"
+  },
   "license": "MIT",
   "dependencies": {
     "regexparam": "^1.3.0",
