@@ -1,5 +1,7 @@
 # Woozie
 
+[![Super Tiny](https://badgen.net/badge/bundlephobia/min/woozie)](https://npm.im/woozie) [![Super Tiny](https://badgen.net/badge/bundlephobia/minzip/woozie)](https://npm.im/woozie)
+
 ![Woozie](.github/woozie-in-search.jpg)
 
 Tiny router with browser-first API for React apps.
