@@ -14,8 +14,7 @@ yarn add woozie
 
 ```tsx
 // App.tsx
-
-import { LocationProvider, Router, Link, useLocation } from "woozie";
+import { LocationProvider } from "woozie";
 import PageRouter from "./PageRouter";
 
 const App: React.FC = () => (
@@ -25,6 +24,7 @@ const App: React.FC = () => (
 );
 
 // PageRouter.tsx
+import { Router, Redirect, Link, useLocation, HistoryAction } from "woozie";
 
 const ROUTE_MAP = Router.createMap([
   ["/", () => <Link to="/kek">To Kek</Link>],
