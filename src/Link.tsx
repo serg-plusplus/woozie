@@ -1,7 +1,6 @@
 import * as React from "react";
 import { HistoryAction, createUrl, changeState } from "./history";
-import { To, createLocationUpdates } from "./location";
-import { useLocation } from "./context";
+import { To, useLocation, createLocationUpdates } from "./location";
 
 export interface LinkProps
   extends React.AnchorHTMLAttributes<HTMLAnchorElement> {

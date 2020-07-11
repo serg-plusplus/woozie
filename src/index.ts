@@ -5,7 +5,6 @@ import { To, createLocationState, createLocationUpdates } from "./location";
 export * from "./config";
 export * from "./history";
 export * from "./location";
-export * from "./context";
 export { default as Link } from "./Link";
 export { default as Redirect } from "./Redirect";
 export { Router };

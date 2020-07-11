@@ -1,5 +1,6 @@
+import * as React from "react";
 import { hashRouting } from "./config";
-import { HistoryAction, PatchedHistory } from "./history";
+import { HistoryAction, PatchedHistory, useHistory } from "./history";
 
 export interface LocationState {
   pathname: string;
@@ -88,4 +89,24 @@ export function createLocationUpdates(
     case "object":
       return to;
   }
+}
+
+export function useLocation() {
+  return React.useContext(LocationContext);
+}
+
+export const LocationProvider: React.FC = ({ children }) => {
+  useHistory();
+  const lctn = createLocationState();
+
+  return (
+    <LocationContext.Provider value={lctn}>{children}</LocationContext.Provider>
+  );
+};
+
+export const LocationContext = React.createContext<LocationState>(null as any);
+
+if (process.env.NODE_ENV === "development") {
+  LocationContext.displayName = "Woozie.LocationContext";
+  LocationProvider.displayName = "Woozie.LocationProvider";
 }
