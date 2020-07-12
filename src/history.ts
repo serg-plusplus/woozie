@@ -86,21 +86,15 @@ export function resetHistoryPosition() {
 patchMethod("pushState", HistoryAction.Push);
 patchMethod("replaceState", HistoryAction.Replace);
 
-window.addEventListener(HistoryAction.Pop, handlePopstate);
-window.addEventListener(HistoryAction.Push, handlePushstate);
-window.addEventListener(HistoryAction.Replace, handleReplacestate);
+subscribeAction(HistoryAction.Pop);
+subscribeAction(HistoryAction.Push);
+subscribeAction(HistoryAction.Replace);
 
-function handlePopstate() {
-  patchHistory(HistoryAction.Pop);
-  notifyListeners();
-}
-function handlePushstate() {
-  patchHistory(HistoryAction.Push);
-  notifyListeners();
-}
-function handleReplacestate() {
-  patchHistory(HistoryAction.Replace);
-  notifyListeners();
+function subscribeAction(action: HistoryAction) {
+  window.addEventListener(action, () => {
+    patchHistory(action);
+    notifyListeners();
+  });
 }
 
 function patchHistory(action: HistoryAction) {
