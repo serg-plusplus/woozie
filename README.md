@@ -18,6 +18,7 @@ yarn add woozie
 
 ```tsx
 // App.tsx
+import * as React from "react";
 import { LocationProvider } from "woozie";
 import PageRouter from "./PageRouter";
 
@@ -27,7 +28,10 @@ const App: React.FC = () => (
   </LocationProvider>
 );
 
+export default App;
+
 // PageRouter.tsx
+import * as React from "react";
 import { Router, Redirect, Link, useLocation, HistoryAction } from "woozie";
 
 const ROUTE_MAP = Router.createMap([
@@ -50,6 +54,8 @@ const PageRouter: React.FC = () => {
     pathname,
   ]);
 };
+
+export default PageRouter;
 ```
 
 ## Local Development
