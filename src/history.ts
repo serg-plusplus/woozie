@@ -1,5 +1,4 @@
 import * as React from "react";
-import useForceUpdate from "use-force-update";
 import { hashRouting } from "./config";
 
 export enum HistoryAction {
@@ -29,8 +28,8 @@ export function listen(listener: HistoryListener) {
 }
 
 export function useHistory() {
-  const forceUpdate = useForceUpdate();
-  React.useLayoutEffect(() => listen(forceUpdate), [forceUpdate]);
+  const [, setState] = React.useState();
+  React.useLayoutEffect(() => listen(() => setState(null)), [setState]);
 }
 
 export function changeState(
