@@ -54,6 +54,7 @@
     "start": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test --passWithNoTests",
+    "format": "tsdx lint --fix",
     "lint": "tsdx lint",
     "prepare": "tsdx build"
   },
@@ -62,7 +63,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "tsdx lint --fix"
+      "pre-commit": "tsdx lint"
     }
   }
 }
