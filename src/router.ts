@@ -30,7 +30,8 @@ export function createMap<C>(routes: Routes<C>): RouteMap<C> {
 }
 
 export function resolve<C>(preparedRM: RouteMap<C>, path: Path, ctx: C): any {
-  for (const { resolveResult, pattern, keys } of preparedRM) {
+  for (let i = 0; i < preparedRM.length; i++) {
+    const { resolveResult, pattern, keys } = preparedRM[i];
     if (pattern.test(path)) {
       const params = createParams(path, pattern, keys);
       const result = resolveResult(params, ctx);

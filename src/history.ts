@@ -13,15 +13,19 @@ export interface PatchedHistory extends History {
   position: number;
 }
 
-export type HistoryListener = () => void;
+export type HistoryListener = (action: HistoryAction) => void;
 
-const listeners = new Set<HistoryListener>();
+const ACTIONS = [HistoryAction.Pop, HistoryAction.Push, HistoryAction.Replace];
 
 export function listen(listener: HistoryListener) {
-  listeners.add(listener);
-  return () => {
-    listeners.delete(listener);
-  };
+  const refs: [HistoryAction, () => void][] = ACTIONS.map((action) => [
+    action,
+    () => listener(action),
+  ]);
+
+  refs.forEach(([action, cb]) => window.addEventListener(action, cb));
+  return () =>
+    refs.forEach(([action, cb]) => window.removeEventListener(action, cb));
 }
 
 export function useHistory() {
@@ -41,15 +45,11 @@ export function changeState(
     url = createUrl(pathname, search, url);
   }
 
-  switch (action) {
-    case HistoryAction.Push:
-      window.history.pushState(state, title, url);
-      break;
-
-    case HistoryAction.Replace:
-      window.history.replaceState(state, title, url);
-      break;
-  }
+  window.history[action === HistoryAction.Push ? "pushState" : "replaceState"](
+    state,
+    title,
+    url
+  );
 }
 
 export function go(delta: number) {
@@ -80,22 +80,12 @@ export function createUrl(
 
 export function resetHistoryPosition() {
   (window.history as PatchedHistory).position = 0;
-  notifyListeners();
 }
 
 patchMethod("pushState", HistoryAction.Push);
 patchMethod("replaceState", HistoryAction.Replace);
 
-subscribeAction(HistoryAction.Pop);
-subscribeAction(HistoryAction.Push);
-subscribeAction(HistoryAction.Replace);
-
-function subscribeAction(action: HistoryAction) {
-  window.addEventListener(action, () => {
-    patchHistory(action);
-    notifyListeners();
-  });
-}
+listen(patchHistory);
 
 function patchHistory(action: HistoryAction) {
   const patchedHistory = window.history as PatchedHistory;
@@ -109,15 +99,11 @@ function patchHistory(action: HistoryAction) {
   });
 }
 
-function notifyListeners() {
-  listeners.forEach((listener) => listener());
-}
-
 function patchMethod(method: string, eventType: HistoryAction) {
   const history = window.history as any;
   const original = history[method];
 
-  history[method] = function(state: any) {
+  history[method] = function (state: any) {
     const result = original.apply(this, arguments);
 
     const event = new CustomEvent(eventType);
