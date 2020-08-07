@@ -1,6 +1,7 @@
 import * as React from "react";
-import { To, createLocationState, createLocationUpdates } from "./location";
-import { HistoryAction, createUrl, changeState } from "./history";
+import { To } from "./location";
+import { HistoryAction } from "./history";
+import { navigate } from "./navigate";
 
 type RedirectProps = {
   to: To;
@@ -13,12 +14,10 @@ const Redirect: React.FC<RedirectProps> = ({
   push = false,
   fallback = null,
 }) => {
-  React.useEffect(() => {
-    const lctn = createLocationState();
-    const { pathname, search, hash, state } = createLocationUpdates(to, lctn);
-    const url = createUrl(pathname, search, hash);
-    changeState(push ? HistoryAction.Push : HistoryAction.Replace, state, url);
-  }, [to, push]);
+  React.useEffect(
+    () => navigate(to, push ? HistoryAction.Push : HistoryAction.Replace),
+    [to, push]
+  );
 
   return fallback;
 };

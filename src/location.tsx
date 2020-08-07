@@ -7,11 +7,14 @@ export interface LocationState {
   search: string;
   hash: string;
   state: any;
-  // History based props
+  // Copy for hash routing
+  nativePathname: string;
+  nativeSearch: string;
+  // History based
   trigger: HistoryAction | null;
   historyLength: number;
   historyPosition: number;
-  // Misc props
+  // Misc
   host?: string;
   hostname?: string;
   href?: string;
@@ -29,6 +32,33 @@ export interface LocationUpdates {
 
 export type ModifyLocation = (location: LocationState) => LocationUpdates;
 export type To = string | LocationUpdates | ModifyLocation;
+
+export function createURL(
+  lctn: LocationState,
+  pathname?: string,
+  search?: string,
+  hash?: string
+) {
+  let url = toURL(pathname, search, hash);
+  if (hashRouting) {
+    url = toURL(lctn.nativePathname, lctn.nativeSearch, url);
+  }
+  return url;
+}
+
+export function toURL(
+  pathname: string = "/",
+  search: string = "",
+  hash: string = ""
+) {
+  if (search && !search.startsWith("?")) {
+    search = `?${search}`;
+  }
+  if (hash && !hash.startsWith("#")) {
+    hash = `#${hash}`;
+  }
+  return `${pathname}${search}${hash}`;
+}
 
 export function createLocationState(): LocationState {
   const {
@@ -49,6 +79,8 @@ export function createLocationState(): LocationState {
     protocol,
     search,
   } = window.location;
+  const nativePathname = pathname;
+  const nativeSearch = search;
 
   if (hashRouting) {
     const url = new URL(hash.startsWith("#") ? hash.slice(1) : hash, origin);
@@ -59,19 +91,21 @@ export function createLocationState(): LocationState {
   }
 
   return {
+    pathname,
+    search,
+    hash,
+    state,
+    nativePathname,
+    nativeSearch,
     trigger,
     historyLength,
     historyPosition,
-    state,
-    hash,
     host,
     hostname,
     href,
     origin,
-    pathname,
     port,
     protocol,
-    search,
   };
 }
 

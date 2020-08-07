@@ -1,6 +1,6 @@
 import * as React from "react";
-import { HistoryAction, createUrl, changeState } from "./history";
-import { To, useLocation, createLocationUpdates } from "./location";
+import { HistoryAction, changeState } from "./history";
+import { To, useLocation, createLocationUpdates, createURL } from "./location";
 
 export interface LinkProps
   extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
@@ -16,7 +16,8 @@ const Link: React.FC<LinkProps> = ({ to, replace, ...rest }) => {
     [to, lctn]
   );
 
-  const url = React.useMemo(() => createUrl(pathname, search, hash), [
+  const url = React.useMemo(() => createURL(lctn, pathname, search, hash), [
+    lctn,
     pathname,
     search,
     hash,
@@ -24,7 +25,7 @@ const Link: React.FC<LinkProps> = ({ to, replace, ...rest }) => {
 
   const handleNavigate = React.useCallback(() => {
     const action =
-      replace || url === createUrl(lctn.pathname, lctn.search, lctn.hash)
+      replace || url === createURL(lctn, lctn.pathname, lctn.search, lctn.hash)
         ? HistoryAction.Replace
         : HistoryAction.Push;
     changeState(action, state, url);

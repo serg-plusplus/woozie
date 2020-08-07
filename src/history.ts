@@ -1,6 +1,5 @@
 import * as React from "react";
 import useForceUpdate from "use-force-update";
-import { hashRouting } from "./config";
 
 export enum HistoryAction {
   Pop = "popstate",
@@ -39,17 +38,8 @@ export function changeState(
   url: string
 ) {
   const title = ""; // Deprecated stuff
-
-  if (hashRouting) {
-    const { pathname, search } = window.location;
-    url = createUrl(pathname, search, url);
-  }
-
-  window.history[action === HistoryAction.Push ? "pushState" : "replaceState"](
-    state,
-    title,
-    url
-  );
+  const method = action === HistoryAction.Push ? "pushState" : "replaceState";
+  window.history[method](state, title, url);
 }
 
 export function go(delta: number) {
@@ -62,20 +52,6 @@ export function goBack() {
 
 export function goForward() {
   go(1);
-}
-
-export function createUrl(
-  pathname: string = "/",
-  search: string = "",
-  hash: string = ""
-): string {
-  if (search && !search.startsWith("?")) {
-    search = `?${search}`;
-  }
-  if (hash && !hash.startsWith("#")) {
-    hash = `#${hash}`;
-  }
-  return `${pathname}${search}${hash}`;
 }
 
 export function resetHistoryPosition() {
