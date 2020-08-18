@@ -56,6 +56,56 @@ const PageRouter: React.FC = () => {
 };
 
 export default PageRouter;
+
+// PageRouterWithContext.tsx
+import * as React from "react";
+import { Router, Redirect, Link, useLocation, HistoryAction } from "woozie";
+
+interface RouteContext {
+  authorized: boolean;
+}
+
+const ROUTE_MAP = Router.createMap<RouteContext>([
+  ["/", () => <Link to="/kek">To Kek</Link>],
+  ["/kek", () => (
+    <>
+      <Link to="/profile">To empty profile</Link>
+      <Link to="/profile/123">To known profile</Link>
+    </>
+  )],
+  // All routes below requires authentication
+  ["*", (_p, { authorized }) =>
+    authorized
+    ? Router.SKIP
+    : (
+      <div>
+        Pls, auth.
+      </div>
+    )
+  ],
+  ["/profile/:id?", ({ id }) => id ? <div>Profile for "{id}"</div> : Router.SKIP],
+  ["*", () => <Redirect to="/" />],
+]);
+
+const PageRouterWithContext: React.FC = () => {
+  const { trigger, pathname } = useLocation();
+
+  // Scroll to top after new location pushed.
+  React.useLayoutEffect(() => {
+    if (trigger === HistoryAction.Push) {
+      window.scrollTo(0, 0);
+    }
+  }, [trigger, pathname]);
+
+  const ctx = React.useMemo<RouteContext>(() => ({ authorized: false }), []);
+
+  return React.useMemo(() => Router.resolve(ROUTE_MAP, pathname, ctx), [
+    pathname,
+    ctx
+  ]);
+};
+
+export default PageRouterWithContext;
 ```
 
 ## Local Development
